@@ -1,0 +1,367 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  min-height: 100vh;
+  color: white;
+}
+
+/* Main Section */
+.blg-section {
+  width: 100%;
+  padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container */
+.blg-container {
+  width: 100%;
+  max-width: 1000px;
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.5s ease;
+}
+
+.blg-container:hover {
+  border-color: rgba(88, 202, 255, 0.3);
+}
+
+/* Blog Image */
+.blg-image {
+  width: 100%;
+  height: 420px;
+}
+
+.blg-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Blog Content */
+.blg-content {
+  padding: 45px;
+}
+
+/* Category */
+.blg-category {
+  display: inline-block;
+  background: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+/* Title */
+.blg-title {
+  font-size: 38px;
+  color: #cbd5e1;
+  line-height: 1.4;
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+
+/* Meta */
+.blg-meta {
+  color: #cbd5e1;
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+/* Text */
+.blg-text {
+  color: #e2e8f0;
+  line-height: 1.9;
+  margin-bottom: 22px;
+  font-size: 15px;
+}
+
+/* Subtitle */
+.blg-subtitle {
+  font-size: 24px;
+  color: #93c5fd;
+  margin-top: 30px;
+  margin-bottom: 18px;
+}
+
+/* Actions */
+.blog-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 35px;
+  margin-bottom: 25px;
+}
+
+/* Buttons */
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+.like-btn.active {
+  background: rgba(255, 0, 80, 0.2);
+  color: #ff4d6d;
+}
+
+.like-btn.active i {
+  color: #ff4d6d;
+}
+
+/* Comment Box */
+.comment-box {
+  display: none;
+  gap: 12px;
+  margin-bottom: 35px;
+}
+
+/* Input */
+.comment-input {
+  flex: 1;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  font-size: 14px;
+}
+
+.comment-input::placeholder {
+  color: #cbd5e1;
+}
+
+.comment-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+/* comment box container */
+.comments-wrapper {
+  display: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: #1e293b;
+  border-radius: 18px;
+  padding: 15px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.comment-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.comment-input {
+  flex: 1;
+}
+
+.comments-container {
+  margin-top: 20px;
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Scrollbar */
+.comments-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.comments-container::-webkit-scrollbar-thumb {
+  background: rgba(88, 202, 255, 0.5);
+  border-radius: 20px;
+}
+
+.comments-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(88, 202, 255, 0.8);
+}
+
+/* Single Comment Card */
+.comment-item {
+  background: #334155;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.comment-item:hover {
+  transform: translateY(-2px);
+  background: #475569;
+  border-color: rgba(88, 202, 255, 0.4);
+}
+
+/* Username */
+.comment-item strong {
+  display: inline-block;
+  color: #58caff;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* Comment Text */
+.comment-item p {
+  margin: 0;
+  color: #e2e8f0;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* Comments Heading */
+.comments-title {
+  color: white;
+  margin-top: 20px;
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Send Button */
+.send-btn {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.send-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+/* Back Button */
+.blg-btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  transition: 0.3s;
+  font-weight: 500;
+}
+
+.blg-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+  color: white;
+  text-decoration: none;
+}
+
+.blog-manage {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #bb2d3b;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .blg-image {
+    height: 280px;
+  }
+  .blg-content {
+    padding: 28px;
+  }
+  .blg-title {
+    font-size: 28px;
+  }
+  .blg-subtitle {
+    font-size: 20px;
+  }
+  .blog-actions {
+    flex-wrap: wrap;
+  }
+  .comment-box {
+    flex-direction: column;
+  }
+  .send-btn {
+    width: 100%;
+  }
+  .blg-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .blg-section {
+    padding: 40px 15px;
+  }
+  .blg-image {
+    height: 220px;
+  }
+  .blg-content {
+    padding: 22px;
+  }
+  .blg-title {
+    font-size: 24px;
+  }
+  .blg-text {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+}

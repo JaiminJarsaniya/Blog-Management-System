@@ -1,0 +1,62 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0f172a;
+  font-family: Arial, sans-serif;
+}
+
+.addtask-section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.addtask-container {
+  width: 100%;
+  max-width: 900px;
+  background: #1e293b;
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.addtask-heading {
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+}
+
+.addtask-group {
+  margin-bottom: 20px;
+}
+
+.addtask-group label {
+  display: block;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.addtask-input,
+.addtask-textarea {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.addtask-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+}
