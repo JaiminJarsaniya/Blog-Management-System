@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog Admin Login</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for ('static', filename='admin.css') }}"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+      <div class="login-box">
+        <div class="login-header">
+          <h1>Blog Admin</h1>
+          <p>Welcome back! Please login to continue</p>
+        </div>
+
+        <div class="input-box">
+          <input type="email" id="email" placeholder="Email Address" />
+        </div>
+
+        <div class="input-box">
+          <input type="password" id="password" placeholder="Password" />
+        </div>
+
+        <button onclick="login()">Sign In</button>
+
+        <p id="error-msg"></p>
+      </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-container" id="adminPanel">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="logo">
+          <h2>Blog Admin</h2>
+        </div>
+
+        <ul class="menu">
+          <li class="active" onclick="showPage('dashboard', this)">
+            Dashboard
+          </li>
+          <li onclick="showPage('users', this)">Users</li>
+          <li onclick="showPage('posts', this)">Posts</li>
+          <li onclick="showPage('categories', this)">Categories</li>
+          <li onclick="showPage('comments', this)">Comments</li>
+          <li onclick="showPage('contact', this)">Contact</li>
+          <li onclick="logout()">Logout</li>
+        </ul>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <header class="topbar">
+          <div class="admin-profile">
+            <span id="adminEmailDisplay"></span>
+          </div>
+        </header>
+
+        <!-- Dashboard -->
+        <section id="dashboard" class="page active-page">
+          <h1>Dashboard</h1>
+          <br />
+
+          <div class="cards">
+            <div class="card">
+              <h3>Total Posts</h3>
+              <p>{{ total_posts }}</p>
+            </div>
+
+            <div class="card">
+              <h3>Total Users</h3>
+              <p>{{ total_users }}</p>
+            </div>
+
+            <div class="card">
+              <h3>Total Comments</h3>
+              <p>{{ total_comments }}</p>
+            </div>
+            <div class="card">
+              <h3>Total Contacts</h3>
+              <p>{{ total_contacts }}</p>
+            </div>
+          </div>
+
+          <div class="recent-posts">
+            <div class="section-header">
+              <h2>Recent Posts</h2>
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Author</th>
+                  <th>Date</th>
+                  <th>Subtitle</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for post in recent_posts %}
+                <tr>
+                  <td>{{ post.title }}</td>
+                  <td>{{ post.category }}</td>
+                  <td>{{ post.author }}</td>
+                  <td>{{ post.date }}</td>
+                  <td>{{ post.subtitle }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+            <div class="view-posts">
+              <a
+                href="javascript:void(0);"
+                onclick="
+                  showPage(
+                    'posts',
+                    document.querySelector('.menu li:nth-child(3)'),
+                  )
+                "
+              >
+                View All Posts →
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Users -->
+        <section id="users" class="page">
+          <h1>Users Management</h1>
+          <br />
+
+          <div class="recent-posts">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for user in users %}
+                <tr>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>
+                    <form
+                      action="{{ url_for('delete_user', id=user.id) }}"
+                      method="POST"
+                      onsubmit="
+                        return confirm(
+                          'Are you sure you want to delete this user?',
+                        );
+                      "
+                    >
+                      <button class="delete-btn">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Posts -->
+        <section id="posts" class="page">
+          <h1>Posts Management</h1>
+
+          <div class="recent-posts">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>User Name</th>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Author</th>
+                  <th>Date</th>
+                  <th>Image</th>
+                  <th>Description</th>
+                  <th>Subtitle</th>
+                  <th>Content</th>
+                  <th>Total Likes</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for blog in blogs %}
+                <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>{{ blog.user.name }}</td>
+                  <td>{{ blog.title }}</td>
+                  <td>{{ blog.category }}</td>
+                  <td>{{ blog.author }}</td>
+                  <td>{{ blog.date }}</td>
+                  <td>
+                    <img
+                      src="{{ blog.image }}"
+                      alt="Blog Image"
+                      width="100"
+                      height="70"
+                    />
+                  </td>
+                  <td>{{ blog.description[:100] }}...</td>
+                  <td>{{ blog.subtitle }}</td>
+                  <td>{{ blog.content[:100] }}...</td>
+                  <td>{{ blog.likes | length }}</td>
+                  <td class="action-buttons">
+                    <a href="{{ url_for('admin_edit_blog', blog_id=blog.id) }}">
+                      <button class="edit-btn">Edit</button>
+                    </a>
+
+                    <form
+                      action="{{ url_for('admin_delete_blog', blog_id=blog.id) }}"
+                      method="POST"
+                      onsubmit="
+                        return confirm(
+                          'Are you sure you want to delete this blog?',
+                        );
+                      "
+                    >
+                      <button class="delete-btn">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Categories -->
+        <section id="categories" class="page">
+          <h1>Categories Management</h1>
+
+          <div class="recent-posts">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Category Name</th>
+                  <th>Total Blogs</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for category in categories %}
+                <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>{{ category.category }}</td>
+                  <td>{{ category.total_blogs }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Comments -->
+        <section id="comments" class="page">
+          <h1>Comments Management</h1>
+
+          <div class="recent-posts">
+            <table>
+              <thead>
+                <tr>
+                  <th>User Name</th>
+                  <th>Blog Title</th>
+                  <th>Comment</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for comment in comments %}
+                <tr>
+                  <td>{{ comment.user_name }}</td>
+                  <td>{{ comment.blog_title }}</td>
+                  <td>{{ comment.comment }}</td>
+
+                  <td>
+                    <form
+                      action="{{ url_for('delete_comment', id=comment.id) }}"
+                      method="POST"
+                      onsubmit="
+                        return confirm(
+                          'Are you sure you want to delete this comment?',
+                        );
+                      "
+                    >
+                      <button class="delete-btn">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="page">
+          <h1>Contact Messages</h1>
+
+          <div class="recent-posts">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Subject</th>
+                  <th>Message</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for contact in contacts %}
+                <tr>
+                  <td>{{ contact.name }}</td>
+                  <td>{{ contact.email }}</td>
+                  <td>{{ contact.subject }}</td>
+                  <td>{{ contact.message }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='admin.js') }}"></script>
+  </body>
+</html>

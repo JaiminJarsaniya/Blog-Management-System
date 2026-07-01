@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>BLOG WEB</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for ('static', filename='blogs.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Hero Section -->
+    <section class="blog-section text-center">
+      <div class="blogs-container">
+        <h1>Welcome to My Blog</h1>
+        <p>
+          Discover amazing articles about Web Development, Programming,
+          Technology, and Design.
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        <!-- Blog Posts -->
+        <div class="col-lg-8">
+          <a href="/addtask" class="addblog-btn">
+            <i class="fa-solid fa-plus"></i>
+            Add Blog
+          </a>
+
+          <!-- Blog Grid -->
+          <div class="row">
+            {% if blogs %} {% for blog in blogs %}
+            <div class="col-md-6 mb-4">
+              <div class="blogcard card h-100">
+                <img
+                  src="{{ blog.image or 'https://via.placeholder.com/600x300?text=No+Image' }}"
+                  class="card-img"
+                  alt="{{ blog.title }}"
+                />
+
+                <div class="card-body">
+                  <div class="text-muted small mb-2">
+                    {{ blog.category }} · {{ blog.date.strftime('%b %d, %Y') }}
+                  </div>
+
+                  <h5 class="card-title">{{ blog.title }}</h5>
+
+                  <p class="card-text">{{ blog.subtitle }}</p>
+
+                  <div class="blog-footer">
+                    <a
+                      href="{{ url_for('blg', blog_id=blog.id, source='blogs') }}"
+                      class="read-more-btn"
+                    >
+                      Read More
+                    </a>
+
+                    <div class="blog-actions">
+                      <button
+                        class="action-btn like-btn {% if blog.id in liked_blogs %}active{% endif %}"
+                        data-blog-id="{{ blog.id }}"
+                      >
+                        <i
+                          class="{% if blog.id in liked_blogs %} fa-solid {% else %} fa-regular {% endif %} fa-heart"
+                        ></i>
+                        <span class="like-count">
+                          {{ blog.likes|length }}
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {% endfor %} {% else %}
+            <div class="col-12">
+              {% if search %}
+              <div class="alert alert-warning text-center">
+                <strong>No blog found for "{{ search }}"</strong>
+              </div>
+              {% else %}
+              <div class="alert alert-info text-center">
+                No blogs found yet. Add your first blog.
+              </div>
+              {% endif %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+          <!-- Search -->
+          <div class="card sidebar-card mb-4">
+            <div class="card-header fw-bold">Search</div>
+            <div class="card-body">
+              <form
+                method="GET"
+                action="{{ url_for('blogs') }}"
+                class="search-form"
+              >
+                <div class="search-box">
+                  <input
+                    type="text"
+                    name="search"
+                    class="search-input"
+                    placeholder="🔍 Search by title or category..."
+                    value="{{ search }}"
+                  />
+                  <button type="submit" class="search-btn">Search</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Categories -->
+          <div class="card sidebar-card mb-4">
+            <div class="card-header fw-bold">Categories</div>
+            <div class="card-body">
+              <ul class="list-unstyled">
+                {% if categories %} {% for category in categories %}
+                <li class="mb-2">
+                  <a href="#" class="category-link"> {{ category }} </a>
+                </li>
+                {% endfor %} {% else %}
+                <li>No Categories Found</li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+
+          <!-- About -->
+          <div class="card sidebar-card mb-4">
+            <div class="card-header fw-bold">About Blog</div>
+            <div class="card-body">
+              This blog shares tutorials and guides about frontend, backend,
+              APIs, databases, and full-stack development.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="blogs-footer">
+      <div class="footers-content">
+        <a href="/" class="back-home"> ← Back to Home </a>
+      </div>
+    </footer>
+
+    <!-- javascript -->
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>

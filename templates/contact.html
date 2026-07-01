@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Blog Web - Contact Us</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for ('static', filename='about&contact.css') }}"
+    />
+  </head>
+
+  <body>
+    <section class="contact-section">
+      <div class="contact-container">
+        <div class="contact-info">
+          <h1 class="contact-title">Contact Us</h1>
+          <h3 class="contact-subtitle">We'd Love To Hear From You</h3>
+          <p class="contact-text">
+            Have questions, suggestions, or feedback about our blog platform?
+            Feel free to contact us anytime. Our team is always ready to help
+            and connect with our readers and content creators.
+          </p>
+          <div class="contact-details">
+            <strong>Email:</strong> blogapp@email.com
+          </div>
+          <div class="contact-details">
+            <strong>Phone:</strong> +91 98765 43210
+          </div>
+          <div class="contact-details">
+            <strong>Location:</strong> Gujarat, India
+          </div>
+        </div>
+
+        <div class="contact-form">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+          {% for category, message in messages %}
+          <div class="success-message">{{ message }}</div>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+
+          <form method="POST" action="{{ url_for('contact') }}">
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter Your Name"
+              class="contact-input"
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter Your Email"
+              class="contact-input"
+              required
+            />
+            <input
+              type="text"
+              name="subject"
+              placeholder="Enter Subject"
+              class="contact-input"
+              required
+            />
+            <textarea
+              name="message"
+              placeholder="Write Your Message"
+              class="contact-textarea"
+              required
+            ></textarea>
+            <button type="submit" class="contact-btn">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer class="blogs-footer">
+      <a href="/" class="back-home"> ← Back to Home </a>
+    </footer>
+  </body>
+</html>

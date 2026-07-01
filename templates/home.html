@@ -1,0 +1,158 @@
+{% extends "index.html" %} {% block content %}
+
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <a href="#">BLOG WEB</a>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="/blogs">Blogs</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-buttons">
+      {% if session.get("email") %}
+      <span class="username"> Welcome, {{ session.get("name") }} </span>
+      <a href="/logout" class="btn logout-btn"> Logout </a>
+      {% else %}
+      <a href="/login" class="btn login-btn"> Login </a>
+      <a href="/signup" class="btn signup-btn"> Sign Up </a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<main class="data">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>Blog Album</h1>
+      <p>
+        Discover amazing blogs, tutorials, and articles. Learn new things with
+        clean and modern blog cards.
+      </p>
+      <div class="hero-buttons">
+        <a href="/blogs" class="btn primary-btn">Explore Blogs</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Search Section -->
+  <section class="home-search">
+    <form method="GET" action="{{ url_for('index') }}" class="search-form">
+      <div class="search-box">
+        <input
+          type="text"
+          name="search"
+          class="search-input"
+          placeholder="🔍 Search by title or category..."
+          value="{{ search }}"
+        />
+        <button type="submit" class="search-btn">
+          Search
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Blog Cards -->
+  <section class="blog-container">
+    {% if blogs %} {% for blog in blogs %}
+
+    <div class="blog-card">
+      <div class="blog-image">
+        {% if blog.image %}
+        <img
+          src="{{ blog.image }}"
+          alt="{{ blog.title }}"
+          style="width: 100%; height: 100%; object-fit: cover"
+        />
+        {% else %} Thumbnail {% endif %}
+      </div>
+
+      <div class="blog-content">
+        <h3>{{ blog.title }}</h3>
+
+        <p>{{ blog.subtitle }}</p>
+
+        <div class="blog-footer">
+          <div class="blog-buttons">
+            <a href="{{ url_for('blg', blog_id=blog.id, source='home') }}">
+              View
+            </a>
+          </div>
+
+          <div class="blog-actions">
+            <button
+              class="action-btn like-btn {% if blog.id in liked_blogs %}active{% endif %}"
+              data-blog-id="{{ blog.id }}"
+            >
+              <i
+                class="{% if blog.id in liked_blogs %} fa-solid {% else %} fa-regular {% endif %} fa-heart"
+              ></i>
+              <span class="like-count"> {{ blog.likes|length }} </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %} {% else %}
+
+    <div class="blog-card">
+      <div class="blog-content">
+        <h3>No Blogs Found</h3>
+        <p>Add your first blog to see it here.</p>
+      </div>
+    </div>
+
+    {% endif %}
+  </section>
+
+  {% if total_blogs > 3 %}
+  <div style="text-align: center; margin-top: 30px">
+    <a href="/blogs" class="btn primary-btn">
+      View All Blogs ({{ total_blogs }})
+    </a>
+  </div>
+  {% endif %}
+</main>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-content">
+      <h2>MyBlog</h2>
+      <p>
+        Discover amazing blogs, tutorials, and articles. Learn and grow with
+        modern web development content.
+      </p>
+    </div>
+    <div class="footer-links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="/blogs">Blogs</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h3>Resources</h3>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+        <li><a href="#">Help</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 MyBlog. All Rights Reserved.</p>
+    <a href="#">Back to Top ↑</a>
+  </div>
+</footer>
+
+{% endblock %}

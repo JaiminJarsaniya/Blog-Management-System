@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{{ blog.title }}</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',
+      filename='addtaskview.css') }}"
+    />
+  </head>
+
+  <body>
+    <section class="blg-section">
+      <div class="blg-container">
+        <div class="blg-image">
+          <img src="{{ blog.image }}" alt="Blog Image" />
+        </div>
+
+        <div class="blg-content">
+          <span class="blg-category"> {{ blog.category }} </span>
+
+          <h1 class="blg-title">{{ blog.title }}</h1>
+
+          <div class="blg-meta">Posted on {{ blog.date }}</div>
+
+          <p class="blg-text">{{ blog.description }}</p>
+
+          <h2 class="blg-subtitle">{{ blog.subtitle }}</h2>
+
+          {{ blog.content | safe }}
+
+          <a href="/" class="blg-btn"> Back To Blogs </a>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

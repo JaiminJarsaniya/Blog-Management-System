@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Blog</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='addtask.css') }}"
+    />
+  </head>
+
+  <body>
+    <section class="addtask-section">
+      <div class="addtask-container">
+        <h1 class="addtask-heading">Create New Blog</h1>
+
+        <form method="POST" class="addtask-form">
+          <div class="addtask-group">
+            <label for="title">Blog Title</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value="{{ blog.title }}"
+              class="addtask-input"
+              required
+            />
+          </div>
+
+          <div class="addtask-group">
+            <label for="category">Category</label>
+            <input
+              type="text"
+              id="category"
+              name="category"
+              value="{{ blog.category }}"
+              class="addtask-input"
+              required
+            />
+          </div>
+
+          <div class="addtask-group">
+            <label for="author">Author Name</label>
+            <input
+              type="text"
+              id="author"
+              name="author"
+              value="{{ blog.author }}"
+              class="addtask-input"
+            />
+          </div>
+
+          <div class="addtask-group">
+            <label for="date">Publish Date</label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              value="{{ blog.date.strftime('%Y-%m-%d') }}"
+              class="addtask-input"
+              required
+            />
+          </div>
+
+          <div class="addtask-group">
+            <label for="image">Image URL</label>
+            <input
+              type="url"
+              id="image"
+              name="image"
+              value="{{ blog.image }}"
+              class="addtask-input"
+              placeholder="https://example.com/image.jpg"
+              required
+            />
+          </div>
+
+          <div class="addtask-group">
+            <label for="description">Short Description</label>
+            <textarea
+              id="description"
+              name="description"
+              rows="4"
+              class="addtask-textarea"
+              required
+            >
+            {{ blog.description }}</textarea
+            >
+          </div>
+
+          <div class="addtask-group">
+            <label for="subtitle">Subtitle</label>
+            <input
+              type="text"
+              id="subtitle"
+              name="subtitle"
+              value="{{ blog.subtitle }}"
+              class="addtask-input"
+            />
+          </div>
+
+          <div class="addtask-group">
+            <label for="content">Blog Content</label>
+            <textarea
+              id="content"
+              name="content"
+              rows="8"
+              class="addtask-textarea"
+              required
+            >
+            {{ blog.content }}</textarea
+            >
+          </div>
+
+          <button type="submit" class="addtask-btn">Update Blog</button>
+        </form>
+      </div>
+    </section>
+
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+
+    <script>
+      CKEDITOR.replace("content");
+    </script>
+  </body>
+</html>
